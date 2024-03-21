@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import Navbar from "@/components/Navbar/Navbar";
-import AuthModal from "@/components/Modals/AuthModal";
+import AuthModal from "@/components/Modals/AuthModal/AuthModal";
 import { useRecoilValue } from "recoil";
 import { authModalState } from "@/atoms/authModalAtom";
 import { useAuthState } from "react-firebase-hooks/auth";

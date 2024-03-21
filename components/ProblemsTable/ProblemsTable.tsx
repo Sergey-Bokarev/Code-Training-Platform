@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ProblemsTableBody from "./ProblemsTableBody";
 import ProblemsTableHeader from "./ProblemsTableHeader";
-import YoutubeModal from "../Modals/YoutubeModal";
+import YoutubeModal from "../Modals/YoutubeModal/YoutubeModal";
 
 type ProblemsTable = {};
 
