@@ -5,6 +5,7 @@ import { useSetRecoilState } from "recoil";
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from "@/firebase/firebase";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 type SignupProps = {};
 
@@ -36,18 +37,18 @@ const Signup: React.FC<SignupProps> = () => {
     const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (loading) return;
-        if (!inputs.email || !inputs.password || !inputs.displayName) return alert("Please fill all fields");
+        if (!inputs.email || !inputs.password || !inputs.displayName) return toast.info("Please fill all fields");
         try {
             const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password);
             if (!newUser) return;
             router.push('/');
         } catch (error: any) {
-            alert(error.message);
+            toast.error(error.message);
         }
     }
 
     useEffect(() => {
-        if (error) alert(error.message);
+        if (error) toast.error(error.message);
     }, [error]);
 
     return <form className="space-y-6 px-6 py-4" onSubmit={handleRegister}>
