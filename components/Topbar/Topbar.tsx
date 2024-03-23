@@ -9,6 +9,7 @@ import { AuthModalType } from "@/enum/AuthModalType";
 import Image from "next/image";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { BsList } from "react-icons/bs";
+import Timer from "../Timer/Timer";
 
 type TopbarProps = {
 
@@ -49,6 +50,7 @@ const Topbar:React.FC<TopbarProps> = ({
                     </div>
                 )}
                 <div className="flex items-center space-x-4 flex-1 justify-end">
+                    {problemPage && <Timer />}
                     {!user
                         ?   <Link href="/auth" onClick={handleClick}>
                                 <button className="bg-dark-fill-3 py-1 px-2 cursor-pointer rounded" >
