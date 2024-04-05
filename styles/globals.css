@@ -25,6 +25,15 @@
 	background: #4d4d4d;
 }
 
+.cm-scroller,
+.cm-gutters {
+	background-color: #282828 !important;
+}
+
+.cm-focused {
+	outline: none !important;
+}
+
 .split {
 	display: flex;
 	flex-direction: row;
