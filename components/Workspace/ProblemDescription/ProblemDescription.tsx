@@ -14,7 +14,7 @@ const ProblemDescription: React.FC<ProblemDescriptionType> = () => {
                     Description
                 </div>
             </div>
-            <div className="flex px-0 py-4 h-[calc()100vh-94px] overflow-y-auto">
+            <div className="flex px-0 py-4 h-[calc(100vh-94px)] overflow-y-auto">
                 <div className="px-5">
                     <div className="w-full">
                         <div className="flex space-x-4">
