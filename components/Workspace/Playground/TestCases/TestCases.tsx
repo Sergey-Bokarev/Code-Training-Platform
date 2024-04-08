@@ -1,8 +1,11 @@
+import { Example, Problem } from "@/utils/types/problem";
 import React from "react";
 
-type TestCasesProps = {};
+type TestCasesProps = {
+    problem: Problem;
+};
 
-const TestCases: React.FC<TestCasesProps> = () => {
+const TestCases: React.FC<TestCasesProps> = ({problem}) => {
 
     return (
         <div className="w-full px-5 overflow-auto">
@@ -13,36 +16,24 @@ const TestCases: React.FC<TestCasesProps> = () => {
                 </div>
             </div>
             <div className="flex">
-                <div className="mr-2 items-start mt-2 text-white">
-                    <div className="flex flex-wrap items-center gap-y-4">
-                        <div className="tabBtn">
-                            Case 1
+                {problem.examples.map((example: Example, idx: number) => (
+                    <div key={example.id} className="mr-2 items-start mt-2 text-white">
+                        <div className="flex flex-wrap items-center gap-y-4">
+                            <div className="tabBtn">
+                                {`Case ${idx + 1}`}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="mr-2 items-start mt-2 text-white">
-                    <div className="flex flex-wrap items-center gap-y-4">
-                        <div className="tabBtn">
-                            Case 2
-                        </div>
-                    </div>
-                </div>
-                <div className="mr-2 items-start mt-2 text-white">
-                    <div className="flex flex-wrap items-center gap-y-4">
-                        <div className="tabBtn">
-                            Case 3
-                        </div>
-                    </div>
-                </div>
+                ))}
             </div>
             <div className="font-semibold my-4">
                 <p className="text-sm font-medium mt-4 text-white">Input:</p>
                 <div className="w-full cursor-text rounded-lg border px-3 py-[10px] bg-dark-fill-3 border-transparent text-white mt-2">
-                    nums: [2, 7, , 11, 15], target 9
+                    {problem.examples[0].inputText}
                 </div>
                 <p className="text-sm font-medium mt-4 text-white">Output:</p>
                 <div className="w-full cursor-text rounded-lg border px-3 py-[10px] bg-dark-fill-3 border-transparent text-white mt-2">
-                    [0, 1]
+                    {problem.examples[0].outputText}
                 </div>
             </div>
         </div>
