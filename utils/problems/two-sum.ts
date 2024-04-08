@@ -59,7 +59,7 @@ export const twoSum: Problem = {
             explanation: "Because nums[1] + nums[2] === 6, we return [1, 2]"
         },
         {
-            id: 1,
+            id: 3,
             inputText: "nums = [3,3], target = 6",
             outputText: "[0,1]"
         }
