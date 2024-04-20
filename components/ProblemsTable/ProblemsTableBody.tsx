@@ -30,9 +30,15 @@ const ProblemsTableBody:React.FC<ProblemsTableBodyProps> = ({setLoadingProblems}
                             <BsCheckCircle fontSize="18" width="18" />
                         </th>
                         <td className="px-6 py-4">
-                            <Link href={`/problems/${problem.id}`} className="hover:text-blue-600 cursor-pointer">
-                                {problem.title}
-                            </Link>
+                            {problem?.link ? (
+                                <Link href={problem.link} target="_blank" className="hover:text-blue-600 cursor-pointer">
+                                    {`${problem.order}. ${problem.title}`}
+                                </Link>
+                            ) : (
+                                <Link href={`/problems/${problem.id}`} className="hover:text-blue-600 cursor-pointer">
+                                    {`${problem.order}. ${problem.title}`}
+                                </Link>
+                            )}
                         </td>
                         <td className={`px-6 py-4 ${dificultyColor}`}>
                             {problem.difficulty}
