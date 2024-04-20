@@ -62,10 +62,7 @@ const Signup: React.FC<SignupProps> = () => {
                 type="email"
                 name="email"
                 id="email"
-                className="
-                    border-2 outline-none sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                    bg-gray-600 border-gray-500 placeholder-gray-400 text-white
-                "
+                className="formTextInput"
                 placeholder="name@fojin.tech"
             />
         </div>
@@ -78,10 +75,7 @@ const Signup: React.FC<SignupProps> = () => {
                 type="displayName"
                 name="displayName"
                 id="displayName"
-                className="
-                    border-2 outline-none sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                    bg-gray-600 border-gray-500 placeholder-gray-400 text-white
-                "
+                className="formTextInput"
                 placeholder="John Doe"
             />
         </div>
@@ -94,17 +88,12 @@ const Signup: React.FC<SignupProps> = () => {
                 type="password"
                 name="password"
                 id="password"
-                className="
-                    border-2 outline-none sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                    bg-gray-600 border-gray-500 placeholder-gray-400 text-white
-                "
+                className="formTextInput"
                 placeholder="********"
             />
         </div>
 
-        <button type="submit" className="w-full text-white focus:ring-blue-300 font-medium rounded-lg
-            text-sm px-5 py-2.5 text-center bg-brand-orange hover:bg-brand-orange-s
-        ">
+        <button type="submit" className="formSubmitButton">
             {loading ? "Registering..." : "Register"}
         </button>
         <div className="text-sm font-medium text-gray-300">

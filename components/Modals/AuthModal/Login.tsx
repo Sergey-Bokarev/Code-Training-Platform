@@ -61,10 +61,7 @@ const Login: React.FC<LoginProps> = () => {
                 type="email"
                 name="email"
                 id="email"
-                className="
-                    border-2 outline-none sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                    bg-gray-600 border-gray-500 placeholder-gray-400 text-white
-                "
+                className="formTextInput"
                 placeholder="name@fojin.tech"
             />
         </div>
@@ -77,17 +74,11 @@ const Login: React.FC<LoginProps> = () => {
                 type="password"
                 name="password"
                 id="password"
-                className="
-                    border-2 outline-none sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                    bg-gray-600 border-gray-500 placeholder-gray-400 text-white
-                "
+                className="formTextInput"
                 placeholder="********"
             />
         </div>
-
-        <button type="submit" className="w-full text-white focus:ring-blue-300 font-medium rounded-lg
-            text-sm px-5 py-2.5 text-center bg-brand-orange hover:bg-brand-orange-s
-        ">
+        <button type="submit" className="formSubmitButton">
             {loading ? "Loging in..." : "Login"}
         </button>
         <button className="flex w-full justify-end" onClick={() => handleClick(AuthModalType.ForgotPassword)}>
