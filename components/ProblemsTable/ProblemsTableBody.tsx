@@ -1,15 +1,19 @@
 import React from "react";
 import Link from "next/link";
-import { Problem, problems } from "@/mockProblems/problems";
 import { BsCheckCircle } from "react-icons/bs";
 import { AiFillYoutube } from "react-icons/ai";
 import { useSetRecoilState } from "recoil";
 import { youtubeModalState } from "@/atoms/youtubeModalAtom";
+import { useGetProblems } from "./ProblemsTableBody.hooks";
+import IFirebaseProblem from "@/firebase/interface/IProblem";
 
-type ProblemsTableBody = {};
+type ProblemsTableBodyProps = {
+    setLoadingProblems: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const ProblemsTableBody:React.FC<ProblemsTableBody> = () => {
+const ProblemsTableBody:React.FC<ProblemsTableBodyProps> = ({setLoadingProblems}) => {
 
+    const problems = useGetProblems(setLoadingProblems);
     const setYoutubeState = useSetRecoilState(youtubeModalState);
 
     const openModal = (videoId: string | undefined) => {
@@ -18,7 +22,7 @@ const ProblemsTableBody:React.FC<ProblemsTableBody> = () => {
 
     return (
         <tbody className="text-white ">
-            {problems.map((problem: Problem, idx: number) => {
+            {problems.map((problem: IFirebaseProblem, idx: number) => {
                 const dificultyColor: string = problem.difficulty === "Easy" ? "text-dark-green-s" : problem.difficulty === "Medium" ? "text-dark-yellow" : "text-dark-pink";
                 return (
                     <tr className={`${idx % 2 === 1 ? 'bg-dark-layer-1' : ""}`} key={problem.id}>
