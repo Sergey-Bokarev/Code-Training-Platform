@@ -7,6 +7,7 @@ import { auth, firestore } from "@/firebase/firebase";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { doc, setDoc } from "firebase/firestore";
+import { IFirebaseUser } from "@/firebase/interface/IfirebaseUser";
 
 type SignupProps = {};
 
@@ -43,7 +44,7 @@ const Signup: React.FC<SignupProps> = () => {
             toast.loading("Creating your account...", {toastId: "loadingToast"});
             const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password);
             if (!newUser) return;
-            const userData = {
+            const userData: IFirebaseUser = {
                 uid: newUser.user.uid,
                 email: newUser.user.email,
                 displayName: inputs.displayName,

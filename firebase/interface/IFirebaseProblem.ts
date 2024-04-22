@@ -1,4 +1,4 @@
-export default interface IFirebaseProblem {
+export interface IFirebaseProblem {
 
     id: string;
     title: string;

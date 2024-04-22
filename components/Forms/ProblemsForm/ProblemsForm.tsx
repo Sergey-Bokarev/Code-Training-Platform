@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { firestore } from "@/firebase/firebase";
-import IFirebaseProblem from "@/firebase/interface/IProblem";
+import IFirebaseProblem from "@/firebase/interface/IFirebaseProblem";
 
 type ProblemsFormType = {};
 

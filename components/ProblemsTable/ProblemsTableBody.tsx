@@ -5,7 +5,7 @@ import { AiFillYoutube } from "react-icons/ai";
 import { useSetRecoilState } from "recoil";
 import { youtubeModalState } from "@/atoms/youtubeModalAtom";
 import { useGetProblems } from "./ProblemsTableBody.hooks";
-import IFirebaseProblem from "@/firebase/interface/IProblem";
+import IFirebaseProblem from "@/firebase/interface/IFirebaseProblem";
 
 type ProblemsTableBodyProps = {
     setLoadingProblems: React.Dispatch<React.SetStateAction<boolean>>;

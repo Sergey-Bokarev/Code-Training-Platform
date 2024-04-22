@@ -1,6 +1,6 @@
 import React from "react";
 import { firestore } from "@/firebase/firebase";
-import IFirebaseProblem from "@/firebase/interface/IProblem";
+import { IFirebaseProblem } from "@/firebase/interface/IFirebaseProblem";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
