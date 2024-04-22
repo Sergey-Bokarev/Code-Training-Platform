@@ -56,7 +56,7 @@ const Topbar:React.FC<TopbarProps> = ({
                     </div>
                 )}
                 <div className="flex items-center space-x-4 flex-1 justify-end">
-                    {problemPage && <Timer />}
+                    {user && problemPage && <Timer />}
                     {!user
                         ?   <Link href="/auth" onClick={handleClick}>
                                 <button className="bg-dark-fill-3 py-1 px-2 cursor-pointer rounded" >
