@@ -5,6 +5,8 @@ import { BsCheck2Circle } from "react-icons/bs";
 import { TiStarOutline } from "react-icons/ti";
 import { Example, Problem } from "@/utils/types/problem";
 import { useGetProblem } from "./ProblemDescription.hooks";
+import RectangleSkeleton from "@/components/Skeletons/RectangleSkeleton";
+import CircleSkeleton from "@/components/Skeletons/CircleSkeleton";
 
 type ProblemDescriptionType = {
     problem: Problem;
@@ -48,6 +50,15 @@ const ProblemDescription: React.FC<ProblemDescriptionType> = ({problem}) => {
                                 <div className="flex items-center cursor-pointer hover:bg-dark-fill-3 space-x-1 rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-dark-gray-6">
                                     <TiStarOutline />
                                 </div>
+                            </div>
+                        )}
+                        {loading && (
+                            <div className="mt-3 flex space-x-2">
+                                <RectangleSkeleton />
+                                <CircleSkeleton />
+                                <RectangleSkeleton />
+                                <RectangleSkeleton />
+                                <CircleSkeleton />
                             </div>
                         )}
                         <div className='text-white text-sm'>
