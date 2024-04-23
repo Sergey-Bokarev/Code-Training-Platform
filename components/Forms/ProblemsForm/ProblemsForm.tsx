@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { firestore } from "@/firebase/firebase";
-import IFirebaseProblem from "@/firebase/interface/IFirebaseProblem";
+import { IFirebaseProblem } from "@/firebase/interface/IFirebaseProblem";
 
 type ProblemsFormType = {};
 
@@ -55,8 +55,8 @@ const ProblemsForm: React.FC<ProblemsFormType> = () => {
             <input
                 className="formTextInput"
                 type="text"
-                placeholder="dificulty"
-                name="dificulty"
+                placeholder="difficulty"
+                name="difficulty"
                 onChange={handleInputChange}
             />
             <input

@@ -7,7 +7,7 @@ import { auth, firestore } from "@/firebase/firebase";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { doc, setDoc } from "firebase/firestore";
-import { IFirebaseUser } from "@/firebase/interface/IfirebaseUser";
+import { IFirebaseUser } from "@/firebase/interface/IFirebaseUser";
 
 type SignupProps = {};
 
