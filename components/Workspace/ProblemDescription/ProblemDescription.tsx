@@ -1,8 +1,8 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { AiFillDislike, AiFillLike, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { BsCheck2Circle } from "react-icons/bs";
-import { TiStarOutline } from "react-icons/ti";
+import { TiStarFullOutline, TiStarOutline } from "react-icons/ti";
 import { Example, Problem } from "@/utils/types/problem";
 import { useGetProblem, useGetUsersDataOnProblem } from "./ProblemDescription.hooks";
 import RectangleSkeleton from "@/components/Skeletons/RectangleSkeleton";
@@ -10,7 +10,7 @@ import CircleSkeleton from "@/components/Skeletons/CircleSkeleton";
 import { toast } from "react-toastify";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, firestore } from "@/firebase/firebase";
-import { Transaction, doc, runTransaction } from "firebase/firestore";
+import { Transaction, arrayRemove, arrayUnion, doc, runTransaction, updateDoc } from "firebase/firestore";
 
 type ProblemDescriptionType = {
     problem: Problem;
@@ -146,6 +146,24 @@ const ProblemDescription: React.FC<ProblemDescriptionType> = ({problem}) => {
         setUpdating(false);
     }
 
+    const handleStar = async() => {
+        if (updating) return;
+        if (!user) {
+            toast.error("You must be logged in to dislike a problem");
+            return;
+        }
+        setUpdating(true);
+        const userRef = doc(firestore, "users", user!.uid);
+        if (!starred) {
+            await updateDoc(userRef, {starredProblems: arrayUnion(problem.id)});
+            setUserDataOnProblem(prev => ({...prev, starred: true}));
+        } else {
+            await updateDoc(userRef, {starredProblems: arrayRemove(problem.id)});
+            setUserDataOnProblem(prev => ({...prev, starred: false}));
+        }
+        setUpdating(false);
+    }
+
     return (
         <div className="bg-dark-layer-1">
             <div className="flex h-11 w-full items-center pt-2 bg-dark-layer-2 text-white overflow-x-hidden">
@@ -166,9 +184,11 @@ const ProblemDescription: React.FC<ProblemDescriptionType> = ({problem}) => {
                                 <div className={`${problemDifficultyClass} inline-block rounded-[21px] bg-opacity-[.15] px-2.5 py-1 text-xs font-medium capitalize`}>
                                     {currentProblem.difficulty}
                                 </div>
-                                <div className="rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-green-s text-dark-green-s">
-                                    <BsCheck2Circle />
-                                </div>
+                                {solved && (
+                                    <div className="rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-green-s text-dark-green-s">
+                                        <BsCheck2Circle />
+                                    </div>
+                                )}
                                 <div className="flex items-center cursor-pointer hover:bg-dark-fill-3 space-x-1 rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-dark-gray-6"
                                     onClick={handleLike}
                                 >
@@ -185,8 +205,12 @@ const ProblemDescription: React.FC<ProblemDescriptionType> = ({problem}) => {
                                     {updating && <AiOutlineLoading3Quarters className="animate-spin" />}
                                     <span className="text-xs">{currentProblem.dislikes}</span>
                                 </div>
-                                <div className="flex items-center cursor-pointer hover:bg-dark-fill-3 space-x-1 rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-dark-gray-6">
-                                    <TiStarOutline />
+                                <div className="flex items-center cursor-pointer hover:bg-dark-fill-3 space-x-1 rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-dark-gray-6"
+                                    onClick={handleStar}
+                                >
+                                    {starred && !updating && <TiStarFullOutline className="text-dark-yellow" />}
+                                    {!starred && !updating && <TiStarOutline />}
+                                    {updating && <AiOutlineLoading3Quarters className="animate-spin" />}
                                 </div>
                             </div>
                         )}
