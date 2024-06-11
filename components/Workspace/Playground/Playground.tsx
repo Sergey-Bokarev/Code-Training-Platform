@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PreferenceNav from "./PreferenceNav/PreferenceNav";
 import Split from "react-split";
 import TestCases from "./TestCases/TestCases";
@@ -48,13 +48,23 @@ const Playgroung: React.FC<PlaygroungProps> = ({problem, setJustSolved}) => {
 
     const onChange = (value: string) => {
         setUserCode(value);
+        localStorage.setItem(`code-${pid}`, JSON.stringify(value));
     };
+
+    useEffect(() => {
+        const code = localStorage.getItem(`code-${pid}`);
+        if (user) {
+            setUserCode(code ? JSON.parse(code) : problem.starterCode);
+        } else {
+            setUserCode(problem.starterCode);
+        }
+    }, [pid, user, problem.starterCode]);
 
     return (
         <div className="flex flex-col bg-dark-layer-1 relative overflow-x-hidden">
             <PreferenceNav />
             <Split className="h-[calc(100vh-94px)] pb-[40px]" direction="vertical" sizes={[55, 45]} minSize={60}>
-                <CodeEditor problem={problem} onChange={onChange} />
+                <CodeEditor problem={problem} userCode={userCode} onChange={onChange} />
                 <TestCases problem={problem} />
             </Split>
             <EditorFooter handleSubmit={handleSubmit} />

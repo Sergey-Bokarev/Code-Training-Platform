@@ -6,15 +6,16 @@ import { Problem } from "@/utils/types/problem";
 
 type CodeEditorProps = {
     problem: Problem;
+    userCode: string;
     onChange: (value: string) => void;
 };
 
-const CodeEditor: React.FC<CodeEditorProps> = ({problem, onChange}) => {
+const CodeEditor: React.FC<CodeEditorProps> = ({problem, userCode, onChange}) => {
 
     return (
         <div className="w-full overflow-auto">
             <ReactCodeMirror
-                value={problem.starterCode}
+                value={userCode}
                 onChange={onChange}
                 theme={vscodeDark}
                 extensions={[javascript()]}
