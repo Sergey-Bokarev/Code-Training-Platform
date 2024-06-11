@@ -1,11 +1,9 @@
 import assert from "assert";
 import { Problem } from "../types/problem";
 
-const starterCodeTwoSumJS = `
-    function(nums, trget) {
-        // Write your code here
-    };
-`;
+const starterCodeTwoSumJS = `function(nums, target) {
+    // Write your code here
+};`;
 
 const handlerTwoSum = (fn: any) => {
     try {
@@ -78,7 +76,7 @@ export const twoSum: Problem = {
             <strong>Only one valid answer exists.</strong>
         </li>
     `,
-    handlerFunction: () => true,
+    handlerFunction: handlerTwoSum,
     starterCode: starterCodeTwoSumJS,
     order: 1,
     starterFunctionName: "function twoSum("

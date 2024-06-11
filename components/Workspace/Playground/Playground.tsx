@@ -1,25 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
 import PreferenceNav from "./PreferenceNav/PreferenceNav";
 import Split from "react-split";
 import TestCases from "./TestCases/TestCases";
 import CodeEditor from "./CodeEditor/CodeEditor";
 import EditorFooter from "./EditorFooter/EditorFooter";
 import { Problem } from "@/utils/types/problem";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, firestore } from "@/firebase/firebase";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+import { problems } from "@/utils/problems";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 
 type PlaygroungProps = {
     problem: Problem;
+    setJustSolved: (justSoved: boolean) => void;
 };
 
-const Playgroung: React.FC<PlaygroungProps> = ({problem}) => {
+const Playgroung: React.FC<PlaygroungProps> = ({problem, setJustSolved}) => {
+    const [userCode, setUserCode] = useState<string>(problem.starterCode);
+    const [user] = useAuthState(auth);
+    const {query: {pid}} = useRouter();
+
+    const handleSubmit = async () => {
+        if (!user) {
+            toast("Please login to submit your code");
+            return;
+        }
+        try {
+            const cb = new Function(`return ${userCode}`)();
+            const handlerFunction = problems[pid as string].handlerFunction;
+            const success = typeof handlerFunction === "function" ? handlerFunction(cb) : false;
+            if (success) {
+                const userRef = doc(firestore, "users", user!.uid);
+                await updateDoc(userRef, {solvedProblems: arrayUnion(problem.id)});
+                toast.success("Congratulations! All tests passed!");
+                setJustSolved(true);
+            }
+        } catch (error: any) {
+            if(error.message.startsWith("AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:")) {
+                toast.error("Oops, One or more test cases failed!");
+            } else {
+                toast.error(error.message);
+            }
+        }
+    };
+
+    const onChange = (value: string) => {
+        setUserCode(value);
+    };
 
     return (
         <div className="flex flex-col bg-dark-layer-1 relative overflow-x-hidden">
             <PreferenceNav />
             <Split className="h-[calc(100vh-94px)] pb-[40px]" direction="vertical" sizes={[55, 45]} minSize={60}>
-                <CodeEditor problem={problem} />
+                <CodeEditor problem={problem} onChange={onChange} />
                 <TestCases problem={problem} />
             </Split>
-            <EditorFooter />
+            <EditorFooter handleSubmit={handleSubmit} />
         </div>
     )
 }

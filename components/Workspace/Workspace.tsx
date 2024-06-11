@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Split from "react-split";
 import ProblemDescription from "./ProblemDescription/ProblemDescription";
 import Playgroung from "./Playground/Playground";
@@ -9,11 +9,12 @@ type WorkspaceType = {
 };
 
 const Workspace: React.FC<WorkspaceType> = ({problem}) => {
+    const [justSolved, setJustSolved] = useState<boolean>(false);
 
     return (
         <Split className="split" minSize={0}>
-            <ProblemDescription problem={problem} />
-            <Playgroung problem={problem} />
+            <ProblemDescription problem={problem} justSolved={justSolved} />
+            <Playgroung problem={problem} setJustSolved={setJustSolved} />
         </Split>
     )
 }

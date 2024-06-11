@@ -14,9 +14,10 @@ import { Transaction, arrayRemove, arrayUnion, doc, runTransaction, updateDoc } 
 
 type ProblemDescriptionType = {
     problem: Problem;
+    justSolved: boolean;
 };
 
-const ProblemDescription: React.FC<ProblemDescriptionType> = ({problem}) => {
+const ProblemDescription: React.FC<ProblemDescriptionType> = ({problem, justSolved}) => {
 
     const [user] = useAuthState(auth);
     const { currentProblem, loading, problemDifficultyClass, setCurrentProblem } = useGetProblem(problem.id);
@@ -184,7 +185,7 @@ const ProblemDescription: React.FC<ProblemDescriptionType> = ({problem}) => {
                                 <div className={`${problemDifficultyClass} inline-block rounded-[21px] bg-opacity-[.15] px-2.5 py-1 text-xs font-medium capitalize`}>
                                     {currentProblem.difficulty}
                                 </div>
-                                {solved && (
+                                {(solved || justSolved) && (
                                     <div className="rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-green-s text-dark-green-s">
                                         <BsCheck2Circle />
                                     </div>
