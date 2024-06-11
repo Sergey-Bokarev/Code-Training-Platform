@@ -18,7 +18,7 @@ type PlaygroungProps = {
 };
 
 const Playgroung: React.FC<PlaygroungProps> = ({problem, setJustSolved}) => {
-    const [userCode, setUserCode] = useState<string>(problem.starterCode);
+    let [userCode, setUserCode] = useState<string>(problem.starterCode);
     const [user] = useAuthState(auth);
     const {query: {pid}} = useRouter();
 
@@ -28,6 +28,7 @@ const Playgroung: React.FC<PlaygroungProps> = ({problem, setJustSolved}) => {
             return;
         }
         try {
+            userCode = userCode.slice(userCode.indexOf(problem.starterFunctionName));
             const cb = new Function(`return ${userCode}`)();
             const handlerFunction = problems[pid as string].handlerFunction;
             const success = typeof handlerFunction === "function" ? handlerFunction(cb) : false;
