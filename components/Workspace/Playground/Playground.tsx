@@ -65,7 +65,7 @@ const Playgroung: React.FC<PlaygroungProps> = ({problem, setJustSolved}) => {
         <div className="flex flex-col bg-dark-layer-1 relative overflow-x-hidden">
             <PreferenceNav />
             <Split className="h-[calc(100vh-94px)] pb-[40px]" direction="vertical" sizes={[55, 45]} minSize={60}>
-                <CodeEditor problem={problem} userCode={userCode} onChange={onChange} />
+                <CodeEditor userCode={userCode} onChange={onChange} />
                 <TestCases problem={problem} />
             </Split>
             <EditorFooter handleSubmit={handleSubmit} />

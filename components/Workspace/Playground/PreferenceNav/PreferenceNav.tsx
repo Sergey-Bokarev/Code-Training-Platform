@@ -1,11 +1,20 @@
 import React from "react";
 import { AiOutlineFullscreen, AiOutlineFullscreenExit, AiOutlineSetting } from "react-icons/ai";
 import { useFullscreen } from "./PreferenceNav.hooks";
+import { settingsModalState } from "@/atoms/settingsModalAtom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import SettingsModal from "@/components/Modals/SettingsModal/SettingsModal";
 
 type PreferenceNavProps = {};
 
-const PreferenceNav: React.FC<PreferenceNavProps> = () => {
+const PreferenceNav: React.FC<PreferenceNavProps> = ({}) => {
     const {isFullScreen, setIsFullScreen} = useFullscreen();
+    const settingsModal = useRecoilValue(settingsModalState);
+    const setSettingsModalState = useSetRecoilState(settingsModalState);
+
+    const handleSettings = () => {
+        setSettingsModalState((prev) => ({...prev, settingsModalIsOpen: true}));
+    }
     
     const handleFullScreen = () => {
         if (isFullScreen) {
@@ -26,7 +35,7 @@ const PreferenceNav: React.FC<PreferenceNavProps> = () => {
                 </button>
             </div>
             <div className="flex items-center m-2">
-                <button className="preferenceBtn group">
+                <button className="preferenceBtn group" onClick={handleSettings}>
                     <div className="h-4 w-4 text-dark-gray-6 font-bold text-lg">
                         <AiOutlineSetting />
                     </div>
@@ -43,6 +52,7 @@ const PreferenceNav: React.FC<PreferenceNavProps> = () => {
                     </div>
                 </button>
             </div>
+            {settingsModal.settingsModalIsOpen && <SettingsModal />}
         </div>
     )
 }

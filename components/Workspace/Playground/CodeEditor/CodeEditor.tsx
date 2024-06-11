@@ -1,16 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { javascript } from "@codemirror/lang-javascript";
-import { Problem } from "@/utils/types/problem";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { settingsModalState } from "@/atoms/settingsModalAtom";
 
 type CodeEditorProps = {
-    problem: Problem;
     userCode: string;
     onChange: (value: string) => void;
 };
 
-const CodeEditor: React.FC<CodeEditorProps> = ({problem, userCode, onChange}) => {
+const CodeEditor: React.FC<CodeEditorProps> = ({userCode, onChange}) => {
+    const settingsModal = useRecoilValue(settingsModalState);
+    const setSettingsModalState = useSetRecoilState(settingsModalState);
+
+    useEffect(() => {
+        const initialFontSize = localStorage.getItem("editor-font-size");
+        setSettingsModalState((prev) => ({...prev, fontSize: initialFontSize ? initialFontSize : prev.fontSize}));
+    }, []);
 
     return (
         <div className="w-full overflow-auto">
@@ -19,7 +26,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({problem, userCode, onChange}) =>
                 onChange={onChange}
                 theme={vscodeDark}
                 extensions={[javascript()]}
-                style={{fontSize: 16}}
+                style={{fontSize: settingsModal.fontSize}}
             />
         </div>
     )
