@@ -4,8 +4,8 @@ import { BsCheckCircle } from "react-icons/bs";
 import { AiFillYoutube } from "react-icons/ai";
 import { useSetRecoilState } from "recoil";
 import { youtubeModalState } from "@/atoms/youtubeModalAtom";
-import { useGetProblems } from "./ProblemsTableBody.hooks";
-import IFirebaseProblem from "@/firebase/interface/IFirebaseProblem";
+import { useGetProblems, useGetSolvedProblems } from "./ProblemsTableBody.hooks";
+import { IFirebaseProblem } from "@/firebase/interface/IFirebaseProblem";
 
 type ProblemsTableBodyProps = {
     setLoadingProblems: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,6 +14,7 @@ type ProblemsTableBodyProps = {
 const ProblemsTableBody:React.FC<ProblemsTableBodyProps> = ({setLoadingProblems}) => {
 
     const problems = useGetProblems(setLoadingProblems);
+    const solvedProblems = useGetSolvedProblems();
     const setYoutubeState = useSetRecoilState(youtubeModalState);
 
     const openModal = (videoId: string | undefined) => {
@@ -27,7 +28,7 @@ const ProblemsTableBody:React.FC<ProblemsTableBodyProps> = ({setLoadingProblems}
                 return (
                     <tr className={`${idx % 2 === 1 ? 'bg-dark-layer-1' : ""}`} key={problem.id}>
                         <th className="px-2 py-4 font-medium whitespace-nowrap text-dark-green-s">
-                            <BsCheckCircle fontSize="18" width="18" />
+                            {solvedProblems.includes(problem.id) && <BsCheckCircle fontSize="18" width="18" />}
                         </th>
                         <td className="px-6 py-4">
                             {problem?.link ? (
